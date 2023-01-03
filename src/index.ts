@@ -1,4 +1,3 @@
-/// <reference path="../types/bitcoind-rpc/index.d.ts"/>
 import { Address, OpCode, Tx, TxIn, TxOut } from "@ts-bitcoin/core";
 import RpcClient, { Config } from "bitcoind-rpc";
 
@@ -22,7 +21,7 @@ const fromHash = function (o: ParseConfig, config?: Config): Promise<BpuTx> {
     if ((o.tx as ByTxId)?.h) {
       rpc.getRawTransaction(
         (o.tx as ByTxId).h,
-        async function (err: Error, transaction: any) {
+        async function (err, transaction) {
           if (err) {
             reject(err);
           } else {

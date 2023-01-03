@@ -51,7 +51,6 @@ $parcel$defineInteropFlag(module.exports);
 
 $parcel$export(module.exports, "parse", () => parse, (v) => parse = v);
 $parcel$export(module.exports, "default", () => $eb17f609fec572d7$export$2e2bcd8739ae039, (v) => $eb17f609fec572d7$export$2e2bcd8739ae039 = v);
-/// <reference path="../types/bitcoind-rpc/index.d.ts"/>
 
 
 const fromHash = function(o, config) {

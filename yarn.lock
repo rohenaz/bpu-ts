@@ -1396,7 +1396,7 @@
 
 "@types/bitcoind-rpc@github:rohenaz/bitcoind-rpc-types":
   version "0.9.1"
-  resolved "https://codeload.github.com/rohenaz/bitcoind-rpc-types/tar.gz/12ac1b95e974ef24b3df62a190a9479e921ed95e"
+  resolved "https://codeload.github.com/rohenaz/bitcoind-rpc-types/tar.gz/119526bf4ef95d6395179c061afeea2c68f65dfc"
 
 "@types/graceful-fs@^4.1.3":
   version "4.1.5"
