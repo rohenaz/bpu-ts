@@ -1,6 +1,6 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Bitcoin Processing Unit - Typescript",
   "types": "./dist/bpu.d.ts",
   "main": "dist/bpu.js",
@@ -72,6 +72,7 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@types/bitcoind-rpc": "github:rohenaz/bitcoind-rpc-types",
     "@typescript-eslint/parser": "^5.48.0",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",

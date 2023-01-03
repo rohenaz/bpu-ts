@@ -1,10 +1,5 @@
 {
-  "files": [
-    "src/index.ts",
-    "src/browser.ts",
-    "types/bitcoind-rpc/index.d.ts",
-    "jest.config.ts"
-  ],
+  "files": ["src/index.ts", "src/browser.ts", "jest.config.ts"],
   "exclude": [
     "./coverage",
     "./node_modules",
