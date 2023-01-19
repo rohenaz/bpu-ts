@@ -106,6 +106,7 @@ const fromTx = function (o: ParseConfig): Promise<BpuTx> {
     }
   });
 };
+
 const collect = function (
   o: ParseConfig,
   type: any,
@@ -202,6 +203,7 @@ const collect = function (
             }
           }
         } else {
+          // Opcode case
           if (typeof c.opCodeNum !== "undefined") {
             const op = c.opCodeNum;
             const ops = OpCode[op].toString();
@@ -348,8 +350,23 @@ export type { Config } from "bitcoind-rpc";
 
 export type BPU = {
   parse: typeof parse;
-  RpcClient: typeof RpcClient;
 };
 
-const bpu: BPU = { parse, RpcClient };
+const bpu: BPU = { parse };
 export default bpu;
+
+// Idea from the query-string package? What missing feature? Export default? lol
+// // Workaround for TS missing feature.
+// import * as queryString from './base.js';
+
+// export default queryString;
+
+// export {
+// 	type ParseOptions,
+// 	type ParsedQuery,
+// 	type ParsedUrl,
+// 	type StringifyOptions,
+// 	type Stringifiable,
+// 	type StringifiableRecord,
+// 	type UrlObject,
+// } from './base.js';

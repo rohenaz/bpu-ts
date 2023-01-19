@@ -1,4 +1,3 @@
-import RpcClient from "bitcoind-rpc";
 type Cell = {
     op?: number;
     ops?: string;
@@ -63,13 +62,11 @@ export type ParseConfig = {
     split?: SplitConfig[];
     transform?: (o: any, c: any) => Object;
 };
-export const parse: (o: ParseConfig, config?: any) => Promise<BpuTx>;
+export declare const parse: (o: ParseConfig, config?: any) => Promise<BpuTx>;
 export type { Config } from "bitcoind-rpc";
 export type BPU = {
     parse: typeof parse;
-    RpcClient: typeof RpcClient;
 };
 declare const bpu: BPU;
 export default bpu;
-
-//# sourceMappingURL=bpu.d.ts.map
+//# sourceMappingURL=index.d.ts.map

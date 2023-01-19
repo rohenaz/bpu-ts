@@ -1,12 +1,14 @@
 import { Buffer } from "buffer";
-import crypto from "crypto";
-import { BPU, parse } from ".";
+import { parse } from "./";
+// export { parse } from "./";
+
+type BPU = {
+  parse: typeof parse;
+};
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
     bpu: BPU;
-    crypto: typeof crypto;
   }
 }
 

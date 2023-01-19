@@ -1,32 +1,25 @@
 {
-  "files": ["src/index.ts", "src/browser.ts", "jest.config.ts"],
-  "exclude": [
-    "./coverage",
-    "./node_modules",
-    "./test",
-    "./.parcel-cache",
-    "./types"
+  "files": ["jest.config.ts"],
+  "exclude": ["./coverage", "./.parcel-cache"],
+  "include": [
+    "src/index.ts",
+    "src/browser.ts",
+    "types/common.d.ts",
+    "test/**/*"
   ],
-  "include": ["src/**/*", "types/**/*", "types/**/**/*", "test/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "inlineSourceMap": true,
-    "isolatedModules": true,
     "module": "es6",
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
-    "outDir": "./dist",
-    "removeComments": true,
-    "resolveJsonModule": true,
+    "outDir": "dist/types",
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "strict": true,
-    "target": "es5",
-    "typeRoots": ["src", "node_modules/@types", "types"],
+    "target": "es2018",
     "types": ["node", "jest"]
   },
   "ts-node": {
