@@ -1,6 +1,9 @@
-import {Tx as $dhIrD$Tx, OpCode as $dhIrD$OpCode, Address as $dhIrD$Address} from "@ts-bitcoin/core";
-import $dhIrD$bitcoindrpc from "bitcoind-rpc";
+var $cl6Iw$tsbitcoincore = require("@ts-bitcoin/core");
+var $cl6Iw$bitcoindrpc = require("bitcoind-rpc");
 
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
+}
 function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
@@ -42,7 +45,7 @@ if (parcelRequire == null) {
 
   $parcel$global["parcelRequire45ae"] = parcelRequire;
 }
-parcelRequire.register("4jGlo", function(module, exports) {
+parcelRequire.register("5ISsP", function(module, exports) {
 
 $parcel$export(module.exports, "parse", () => parse, (v) => parse = v);
 
@@ -58,7 +61,7 @@ const fromHash = function(o, config) {
             port: process.env.BITCOIN_PORT ? process.env.BITCOIN_PORT : "8332"
         };
     }
-    const rpc = new (0, $dhIrD$bitcoindrpc)(config);
+    const rpc = new (0, ($parcel$interopDefault($cl6Iw$bitcoindrpc)))(config);
     return new Promise(function(resolve, reject) {
         if (o.tx?.h) rpc.getRawTransaction(o.tx.h, async function(err, transaction) {
             if (err) reject(err);
@@ -74,7 +77,7 @@ const fromTx = function(o) {
     const transaction = o.tx.r;
     return new Promise(function(resolve, reject) {
         if (transaction) {
-            const gene = (0, $dhIrD$Tx).fromHex(transaction);
+            const gene = (0, $cl6Iw$tsbitcoincore.Tx).fromHex(transaction);
             const inputs = gene.txIns ? collect(o, "in", gene.txIns) : [];
             const outputs = gene.txOuts ? collect(o, "out", gene.txOuts) : [];
             resolve({
@@ -184,7 +187,7 @@ const collect = function(o, type, xputs) {
                     // Opcode case
                     if (typeof c.opCodeNum !== "undefined") {
                         const op = c.opCodeNum;
-                        const ops = (0, $dhIrD$OpCode)[op].toString();
+                        const ops = (0, $cl6Iw$tsbitcoincore.OpCode)[op].toString();
                         let splitter;
                         let isSplitter = false;
                         if (o.split && Array.isArray(o.split)) o.split.forEach(function(setting) {
@@ -275,7 +278,7 @@ const collect = function(o, type, xputs) {
                     h: xput.txHashBuf?.toString("hex"),
                     i: xput.scriptVi
                 };
-                const address = (0, $dhIrD$Address).fromTxInScript(xput.script).toString();
+                const address = (0, $cl6Iw$tsbitcoincore.Address).fromTxInScript(xput.script).toString();
                 if (address && address.length > 0) sender.a = address;
                 xputres.e = sender;
                 xputres.seq = xput.nSequence;
@@ -284,7 +287,7 @@ const collect = function(o, type, xputs) {
                     v: xput.valueBn,
                     i: xput_index
                 };
-                const address = (0, $dhIrD$Address).fromTxOutScript(xput.script).toString();
+                const address = (0, $cl6Iw$tsbitcoincore.Address).fromTxOutScript(xput.script).toString();
                 if (address && address.length > 0) receiver.a = address;
                 xputres.e = receiver;
             }
@@ -316,6 +319,6 @@ if (undefined === module) {
 });
 
 
-parcelRequire("4jGlo");
+parcelRequire("5ISsP");
 
-//# sourceMappingURL=bpu.module.js.map
+//# sourceMappingURL=bpu.cjs.map

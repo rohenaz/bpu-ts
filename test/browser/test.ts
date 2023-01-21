@@ -10,18 +10,8 @@ describe("BPU", function () {
   });
 
   test("test require main", async () => {
-    const { mocked } = jest.mock<BPU>("../../dist/bpu.js", () =>
-      require("../../dist/bpu.js")
-    );
-    mocked((bpujs: BPU) => {
-      expect(typeof bpujs).toBe("object");
-      expect(typeof bpujs.parse).toBe("object");
-    });
-  });
-
-  test("test require module", async () => {
-    const { mocked } = jest.mock<BPU>("../../dist/bpu.module.js", () =>
-      require("../../dist/bpu.module.js")
+    const { mocked } = jest.mock<BPU>("../../dist/bpu.cjs", () =>
+      require("../../dist/bpu.cjs")
     );
     mocked((bpujs: BPU) => {
       expect(typeof bpujs).toBe("object");
