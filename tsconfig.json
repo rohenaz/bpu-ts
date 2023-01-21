@@ -7,12 +7,7 @@
     "./.parcel-cache",
     "./types"
   ],
-  "include": [
-    "src/index.ts",
-    "src/browser.ts",
-    "types/common.d.ts",
-    "test/**/*"
-  ],
+  "include": ["src/bpu.ts", "src/browser.ts", "types/common.d.ts", "test/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,

@@ -65,4 +65,4 @@ export type ParseConfig = {
 export const parse: (o: ParseConfig, config?: any) => Promise<BpuTx>;
 export type { Config } from "bitcoind-rpc";
 
-//# sourceMappingURL=bpu.d.ts.map
+//# sourceMappingURL=index.d.ts.map

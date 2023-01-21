@@ -1,7 +1,7 @@
 import { describe, test } from "@jest/globals";
 import assert from "assert";
 
-import { parse } from "../../src";
+import { parse } from "../../src/bpu";
 import raws from "../raw.json";
 
 const largeraw = raws[0];

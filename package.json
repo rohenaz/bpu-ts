@@ -1,11 +1,11 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Bitcoin Processing Unit - Typescript",
-  "types": "dist/bpu.d.ts",
-  "main": "dist/bpu.cjs",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "module": "dist/bpu.js",
-  "type": "module",
+  "type": "commonjs",
   "author": "wildsatchmo",
   "contributors": [
     "wildsatchmo",
@@ -16,17 +16,13 @@
       "isLibrary": true,
       "context": "node",
       "source": "src/index.ts",
-      "outputFormat": "commonjs",
-      "optimize": false,
-      "engines": {
-        "node": ">=14"
-      }
+      "optimize": false
     },
     "module": {
       "isLibrary": true,
       "context": "node",
       "optimize": false,
-      "source": "src/index.ts"
+      "source": "src/bpu.ts"
     },
     "types": {
       "source": "src/index.ts"
