@@ -10,8 +10,8 @@ describe("BPU", function () {
   });
 
   test("test require main", async () => {
-    const { mocked } = jest.mock<BPU>("../../dist/bpu.cjs", () =>
-      require("../../dist/bpu.cjs")
+    const { mocked } = jest.mock<BPU>("../../dist/index.js", () =>
+      require("../../dist/index.js")
     );
     mocked((bpujs: BPU) => {
       expect(typeof bpujs).toBe("object");
