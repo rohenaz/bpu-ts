@@ -62,11 +62,7 @@ export type ParseConfig = {
     split?: SplitConfig[];
     transform?: (o: any, c: any) => Object;
 };
-export declare const parse: (o: ParseConfig, config?: any) => Promise<BpuTx>;
+export const parse: (o: ParseConfig, config?: any) => Promise<BpuTx>;
 export type { Config } from "bitcoind-rpc";
-export type BPU = {
-    parse: typeof parse;
-};
-declare const bpu: BPU;
-export default bpu;
-//# sourceMappingURL=index.d.ts.map
+
+//# sourceMappingURL=bpu.d.ts.map

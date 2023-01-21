@@ -1,8 +1,7 @@
 import { Buffer } from "buffer";
 import { parse } from "./";
-// export { parse } from "./";
 
-type BPU = {
+export type BPU = {
   parse: typeof parse;
 };
 

@@ -1,32 +1,46 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bitcoin Processing Unit - Typescript",
-  "types": "./dist/types/index.d.ts",
-  "main": "./dist/src/index.js",
-  "module": "./esm/src/index.js",
+  "types": "dist/bpu.d.ts",
+  "main": "dist/bpu.js",
+  "module": "dist/bpu.module.js",
   "type": "module",
   "author": "wildsatchmo",
   "contributors": [
     "wildsatchmo",
     "_unwriter"
   ],
-  "files": [
-    "dist",
-    "src",
-    "esm"
-  ],
+  "targets": {
+    "main": {
+      "isLibrary": true,
+      "context": "node",
+      "source": "src/index.ts",
+      "optimize": false,
+      "engines": {
+        "node": ">=14"
+      }
+    },
+    "module": {
+      "isLibrary": true,
+      "context": "node",
+      "optimize": false,
+      "source": "src/index.ts"
+    },
+    "types": {
+      "source": "src/index.ts"
+    }
+  },
   "engines": {
     "node": ">= 14"
   },
   "license": "ISC",
   "scripts": {
     "check": "tsc --noEmit",
-    "clean": "yarn cache clean && rimraf dist/ && rimraf esm/ parcel-bundle-reports .parcel-cache",
+    "clean": "yarn cache clean && rimraf dist/ && rimraf parcel-bundle-reports .parcel-cache",
     "lint": "eslint ./src",
     "prebuild": "npm run clean",
-    "build": "rimraf  dist/ && tsc --module commonjs -outDir dist && tsc --module esnext -outDir esm",
-    "parcelbuild": "rimraf parcel-bundle-reports dist/ && parcel build . --no-cache --target types --target module --target legacy --reporter @parcel/reporter-bundle-analyzer",
+    "build": "rimraf parcel-bundle-reports dist/ && parcel build . --target types --target module --target main --reporter @parcel/reporter-bundle-analyzer",
     "test": "jest --collectCoverage"
   },
   "dependencies": {
@@ -35,9 +49,14 @@
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
-    "ts-node": "^10.9.1",
     "@jest/globals": "^29.3.1",
     "@jest/types": "^29.3.1",
+    "@parcel/config-default": "^2.8.3",
+    "@parcel/core": "^2.8.3",
+    "@parcel/packager-ts": "^2.8.3",
+    "@parcel/reporter-bundle-analyzer": "^2.8.3",
+    "@parcel/transformer-typescript-tsc": "^2.8.3",
+    "@parcel/transformer-typescript-types": "^2.8.3",
     "@types/bitcoind-rpc": "github:rohenaz/bitcoind-rpc-types",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
@@ -51,6 +70,7 @@
     "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
     "tsc": "^2.0.4",
     "typescript": "^4.9.4"
   }

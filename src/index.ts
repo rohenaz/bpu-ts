@@ -347,26 +347,3 @@ if (require.main === module) {
 }
 
 export type { Config } from "bitcoind-rpc";
-
-export type BPU = {
-  parse: typeof parse;
-};
-
-const bpu: BPU = { parse };
-export default bpu;
-
-// Idea from the query-string package? What missing feature? Export default? lol
-// // Workaround for TS missing feature.
-// import * as queryString from './base.js';
-
-// export default queryString;
-
-// export {
-// 	type ParseOptions,
-// 	type ParsedQuery,
-// 	type ParsedUrl,
-// 	type StringifyOptions,
-// 	type Stringifiable,
-// 	type StringifiableRecord,
-// 	type UrlObject,
-// } from './base.js';

@@ -1,7 +1,7 @@
 import { describe, test } from "@jest/globals";
 import assert from "assert";
 
-import BPU from "../../src";
+import { parse } from "../../src";
 import raws from "../raw.json";
 
 const largeraw = raws[0];
@@ -9,7 +9,7 @@ const raw = raws[1];
 describe("BPU", function () {
   describe("transform", function () {
     test("larger than 512 bytes => ls", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: largeraw },
         split: [
           {
@@ -46,7 +46,7 @@ describe("BPU", function () {
   });
   describe("split", function () {
     test("no split", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
       });
       assert.equal(result.out.length, 4);
@@ -55,7 +55,7 @@ describe("BPU", function () {
       });
     });
     test("split and exclude", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -81,7 +81,7 @@ describe("BPU", function () {
       assert.equal(pipeExists, false);
     });
     test("split and include left", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -102,7 +102,7 @@ describe("BPU", function () {
       assert.notEqual(tape[2].cell[tape[2].cell.length - 1].s, "|");
     });
     test("split and include right", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -123,7 +123,7 @@ describe("BPU", function () {
       assert.equal(tape[2].cell[0].s, "|");
     });
     test("split and include center", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -145,7 +145,7 @@ describe("BPU", function () {
       assert.equal(tape[3].cell[0].s, "|");
     });
     test("split with op", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -164,7 +164,7 @@ describe("BPU", function () {
       assert.equal(tape[0].cell.length, 1);
     });
     test("split with ops", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {
@@ -183,7 +183,7 @@ describe("BPU", function () {
       assert.equal(tape[0].cell.length, 1);
     });
     test("split multiple tokens", async function () {
-      let result = await BPU.parse({
+      let result = await parse({
         tx: { r: raw },
         split: [
           {

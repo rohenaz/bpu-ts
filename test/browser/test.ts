@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, jest, test } from "@jest/globals";
 import assert from "assert";
-import { BPU } from "../../src/";
-import bpu from "../../src/browser";
+import bpu, { BPU } from "../../src/browser";
 import raws from "../raw.json";
 
 const largeraw = raws[0];
@@ -12,7 +11,7 @@ describe("BPU", function () {
 
   test("test require main", async () => {
     const { mocked } = jest.mock<BPU>("../../dist/bpu.js", () =>
-      require("../../dist/bmap.js")
+      require("../../dist/bpu.js")
     );
     mocked((bpujs: BPU) => {
       expect(typeof bpujs).toBe("object");
@@ -22,7 +21,7 @@ describe("BPU", function () {
 
   test("test require module", async () => {
     const { mocked } = jest.mock<BPU>("../../dist/bpu.module.js", () =>
-      require("../../dist/bmap.module.js")
+      require("../../dist/bpu.module.js")
     );
     mocked((bpujs: BPU) => {
       expect(typeof bpujs).toBe("object");

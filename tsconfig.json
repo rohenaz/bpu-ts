@@ -1,6 +1,12 @@
 {
   "files": ["jest.config.ts"],
-  "exclude": ["./coverage", "./.parcel-cache"],
+  "exclude": [
+    "./coverage",
+    "./node_modules",
+    "./test",
+    "./.parcel-cache",
+    "./types"
+  ],
   "include": [
     "src/index.ts",
     "src/browser.ts",
@@ -15,7 +21,7 @@
     "module": "es6",
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
-    "outDir": "dist/types",
+    "outDir": "dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
