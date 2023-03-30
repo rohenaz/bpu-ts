@@ -41,12 +41,6 @@
   "devDependencies": {
     "@jest/globals": "^29.3.1",
     "@jest/types": "^29.3.1",
-    "@parcel/config-default": "^2.8.3",
-    "@parcel/core": "^2.8.3",
-    "@parcel/packager-ts": "^2.8.3",
-    "@parcel/reporter-bundle-analyzer": "^2.8.3",
-    "@parcel/transformer-typescript-tsc": "^2.8.3",
-    "@parcel/transformer-typescript-types": "^2.8.3",
     "@types/bitcoind-rpc": "github:rohenaz/bitcoind-rpc-types",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",

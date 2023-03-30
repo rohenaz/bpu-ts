@@ -1,7 +1,5 @@
 .env
 node_modules
 yarn-error.log
-parcel-bundle-reports
 coverage
-.parcel-cache
 package-lock.json
