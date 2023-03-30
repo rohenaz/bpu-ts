@@ -1,11 +1,10 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Bitcoin Processing Unit - Typescript",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
-  "module": "dist/bpu.js",
-  "type": "commonjs",
+  "type": "module",
   "author": "wildsatchmo",
   "contributors": [
     "wildsatchmo",
@@ -18,12 +17,6 @@
       "source": "src/index.ts",
       "optimize": false
     },
-    "module": {
-      "isLibrary": true,
-      "context": "node",
-      "optimize": false,
-      "source": "src/bpu.ts"
-    },
     "types": {
       "source": "src/index.ts"
     }
@@ -34,10 +27,10 @@
   "license": "ISC",
   "scripts": {
     "check": "tsc --noEmit",
-    "clean": "yarn cache clean && rimraf dist/ && rimraf parcel-bundle-reports .parcel-cache",
+    "clean": "yarn cache clean && rimraf dist/",
     "lint": "eslint ./src",
     "prebuild": "npm run clean",
-    "build": "rimraf parcel-bundle-reports dist/ && parcel build . --target types --target module --target main --reporter @parcel/reporter-bundle-analyzer",
+    "build": "rimraf dist/ && tsc",
     "test": "jest --collectCoverage"
   },
   "dependencies": {

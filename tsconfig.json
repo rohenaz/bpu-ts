@@ -1,13 +1,6 @@
 {
-  "files": ["jest.config.ts"],
-  "exclude": [
-    "./coverage",
-    "./node_modules",
-    "./test",
-    "./.parcel-cache",
-    "./types"
-  ],
-  "include": ["src/bpu.ts", "src/browser.ts", "types/common.d.ts", "test/**/*"],
+  "exclude": ["./coverage", "./node_modules", "./test", "./src/types"],
+  "include": ["src/"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
