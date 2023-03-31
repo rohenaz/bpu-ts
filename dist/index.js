@@ -17,8 +17,7 @@ const fromHash = function (o, config) {
     }
     const rpc = new RpcClient(config);
     return new Promise(function (resolve, reject) {
-        var _a;
-        if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
+        if (o.tx?.h) {
             rpc.getRawTransaction(o.tx.h, async function (err, transaction) {
                 if (err) {
                     reject(err);
@@ -63,7 +62,6 @@ const collect = function (o, type, xputs) {
             return r;
         };
     xputs.forEach(function (xput, xput_index) {
-        var _a;
         if (xput.script) {
             const xputres = { i: xput_index, tape: [] };
             let tape_i = 0;
@@ -203,7 +201,7 @@ const collect = function (o, type, xputs) {
                 xputres.tape.push({ cell: cell, i: tape_i++ });
             if (type === "in") {
                 const sender = {
-                    h: (_a = xput.txHashBuf) === null || _a === void 0 ? void 0 : _a.toString("hex"),
+                    h: xput.txHashBuf?.toString("hex"),
                     i: xput.scriptVi,
                 };
                 const address = Address.fromTxInScript(xput.script).toString();
@@ -237,11 +235,3 @@ export const parse = (o, config) => {
     }
     throw new Error(`Invalid Tx`);
 };
-if (require.main === module) {
-    if (process.argv.length >= 3) {
-        const hash = process.argv[2];
-        fromHash({ tx: { h: hash } }).then(function (result) {
-            console.log(result);
-        });
-    }
-}

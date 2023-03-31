@@ -6,15 +6,15 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "es6",
-    "lib": ["esnext"],
+    "module": "ESNext",
+    "lib": [],
     "moduleResolution": "node",
     "outDir": "dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "es2018",
-    "types": ["node", "jest"]
+    "target": "ESNext",
+    "types": ["jest"]
   },
   "ts-node": {
     "moduleTypes": {

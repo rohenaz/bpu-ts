@@ -337,13 +337,4 @@ export const parse = (o: ParseConfig, config?: any): Promise<BpuTx> => {
   throw new Error(`Invalid Tx`);
 };
 
-if (require.main === module) {
-  if (process.argv.length >= 3) {
-    const hash = process.argv[2];
-    fromHash({ tx: { h: hash } }).then(function (result) {
-      console.log(result);
-    });
-  }
-}
-
 export type { Config } from "bitcoind-rpc";
