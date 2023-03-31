@@ -326,12 +326,12 @@ export type ParseConfig = {
   transform?: (o: any, c: any) => Object;
 };
 
-export const parse = (o: ParseConfig, config?: any): Promise<BpuTx> => {
+export const parse = async (o: ParseConfig, config?: any): Promise<BpuTx> => {
   if (o.tx) {
     if ((o.tx as ByTxId).h) {
-      return fromHash(o, config);
+      return await fromHash(o, config);
     } else if ((o.tx as ByRawTx).r) {
-      return fromTx(o);
+      return await fromTx(o);
     }
   }
   throw new Error(`Invalid Tx`);
