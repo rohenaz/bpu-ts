@@ -1,13 +1,13 @@
 {
-  "files": ["jest.config.ts"],
   "exclude": [
     "./coverage",
     "./node_modules",
     "./test",
     "./.parcel-cache",
-    "./types"
+    "./src/types",
+    "jest.config.ts"
   ],
-  "include": ["src/index.ts", "types/common.d.ts", "test/**/*"],
+  "include": ["src", "test/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
