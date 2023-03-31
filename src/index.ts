@@ -107,17 +107,17 @@ const fromTx = function (o: ParseConfig): Promise<BpuTx> {
   });
 };
 
-const collect = function (
+const collect = (
   o: ParseConfig,
   type: any,
   xputs: (TxIn | TxOut)[]
-): In[] | Out[] {
+): In[] | Out[] => {
   const xputsres: any = [];
   if (!o.transform)
     o.transform = function (r: any) {
       return r;
     };
-  xputs.forEach(function (xput, xput_index) {
+  xputs.forEach((xput, xput_index) => {
     if (xput.script) {
       const xputres = { i: xput_index, tape: [] } as any;
       let tape_i = 0;
@@ -279,7 +279,7 @@ const collect = function (
       if (type === "in") {
         const sender = {
           h: (xput as TxIn).txHashBuf?.toString("hex"),
-          i: xput.scriptVi,
+          i: xput.scriptVi.toNumber(),
         } as any;
         const address = Address.fromTxInScript(xput.script).toString();
         if (address && address.length > 0) {
@@ -288,7 +288,10 @@ const collect = function (
         xputres.e = sender;
         xputres.seq = (xput as TxIn).nSequence;
       } else if (type === "out") {
-        const receiver = { v: (xput as TxOut).valueBn, i: xput_index } as any;
+        const receiver = {
+          v: (xput as TxOut).valueBn.toNumber(),
+          i: xput_index,
+        } as any;
         const address = Address.fromTxOutScript(xput.script).toString();
         if (address && address.length > 0) {
           receiver.a = address;

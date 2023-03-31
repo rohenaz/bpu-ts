@@ -61,13 +61,13 @@ const fromTx = function (o) {
         }
     });
 };
-const collect = function (o, type, xputs) {
+const collect = (o, type, xputs) => {
     const xputsres = [];
     if (!o.transform)
         o.transform = function (r) {
             return r;
         };
-    xputs.forEach(function (xput, xput_index) {
+    xputs.forEach((xput, xput_index) => {
         if (xput.script) {
             const xputres = { i: xput_index, tape: [] };
             let tape_i = 0;
@@ -208,7 +208,7 @@ const collect = function (o, type, xputs) {
             if (type === "in") {
                 const sender = {
                     h: xput.txHashBuf?.toString("hex"),
-                    i: xput.scriptVi,
+                    i: xput.scriptVi.toNumber(),
                 };
                 const address = core_1.Address.fromTxInScript(xput.script).toString();
                 if (address && address.length > 0) {
@@ -218,7 +218,10 @@ const collect = function (o, type, xputs) {
                 xputres.seq = xput.nSequence;
             }
             else if (type === "out") {
-                const receiver = { v: xput.valueBn, i: xput_index };
+                const receiver = {
+                    v: xput.valueBn.toNumber(),
+                    i: xput_index,
+                };
                 const address = core_1.Address.fromTxOutScript(xput.script).toString();
                 if (address && address.length > 0) {
                     receiver.a = address;

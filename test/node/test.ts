@@ -69,6 +69,7 @@ describe("BPU", function () {
         result.tx.h,
         "10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6"
       );
+      assert.equal(result.out[0].tape.length, 2);
 
       //let tape = result.out[0].tape[0];
     });
