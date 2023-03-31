@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Address, OpCode, Tx } from "@ts-bitcoin/core";
 import RpcClient from "bitcoind-rpc";
 const fromHash = function (o, config) {
@@ -17,21 +26,24 @@ const fromHash = function (o, config) {
     }
     const rpc = new RpcClient(config);
     return new Promise(function (resolve, reject) {
-        if (o.tx?.h) {
-            rpc.getRawTransaction(o.tx.h, async function (err, transaction) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    if (o.tx) {
-                        o.tx.r = transaction.result;
-                        const result = await fromTx(o);
-                        resolve(result);
+        var _a;
+        if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
+            rpc.getRawTransaction(o.tx.h, function (err, transaction) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        reject(err);
                     }
                     else {
-                        reject(new Error(`Failed to get raw tx from RPC endpoint`));
+                        if (o.tx) {
+                            o.tx.r = transaction.result;
+                            const result = yield fromTx(o);
+                            resolve(result);
+                        }
+                        else {
+                            reject(new Error(`Failed to get raw tx from RPC endpoint`));
+                        }
                     }
-                }
+                });
             });
         }
     });
@@ -62,6 +74,7 @@ const collect = function (o, type, xputs) {
             return r;
         };
     xputs.forEach(function (xput, xput_index) {
+        var _a;
         if (xput.script) {
             const xputres = { i: xput_index, tape: [] };
             let tape_i = 0;
@@ -201,7 +214,7 @@ const collect = function (o, type, xputs) {
                 xputres.tape.push({ cell: cell, i: tape_i++ });
             if (type === "in") {
                 const sender = {
-                    h: xput.txHashBuf?.toString("hex"),
+                    h: (_a = xput.txHashBuf) === null || _a === void 0 ? void 0 : _a.toString("hex"),
                     i: xput.scriptVi,
                 };
                 const address = Address.fromTxInScript(xput.script).toString();

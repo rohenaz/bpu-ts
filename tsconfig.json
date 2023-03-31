@@ -6,14 +6,14 @@
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "ES6",
     "lib": [],
     "moduleResolution": "node",
     "outDir": "dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ESNext",
+    "target": "ES6",
     "types": ["jest"]
   },
   "ts-node": {
