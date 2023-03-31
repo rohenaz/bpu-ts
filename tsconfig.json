@@ -20,7 +20,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "es6",
+    "target": "ESNext",
     "types": ["node", "jest"]
   },
   "ts-node": {

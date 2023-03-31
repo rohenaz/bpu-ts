@@ -1,4 +1,4 @@
-type Cell = {
+export type Cell = {
     op?: number;
     ops?: string;
     b?: string;
@@ -12,11 +12,11 @@ type Cell = {
     lf?: string;
     lb?: string;
 };
-type Tape = {
+export type Tape = {
     cell: Cell[];
     i: number;
 };
-type Out = {
+export type Out = {
     tape: Tape[];
     i: number;
     e: {
@@ -25,7 +25,7 @@ type Out = {
         v: number;
     };
 };
-type In = {
+export type In = {
     i: number;
     e: {
         h: string;

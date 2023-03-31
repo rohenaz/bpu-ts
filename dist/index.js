@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -32,24 +23,21 @@ const fromHash = function (o, config) {
     }
     const rpc = new bitcoind_rpc_1.default(config);
     return new Promise(function (resolve, reject) {
-        var _a;
-        if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
-            rpc.getRawTransaction(o.tx.h, function (err, transaction) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    if (err) {
-                        reject(err);
+        if (o.tx?.h) {
+            rpc.getRawTransaction(o.tx.h, async function (err, transaction) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    if (o.tx) {
+                        o.tx.r = transaction.result;
+                        const result = await fromTx(o);
+                        resolve(result);
                     }
                     else {
-                        if (o.tx) {
-                            o.tx.r = transaction.result;
-                            const result = yield fromTx(o);
-                            resolve(result);
-                        }
-                        else {
-                            reject(new Error(`Failed to get raw tx from RPC endpoint`));
-                        }
+                        reject(new Error(`Failed to get raw tx from RPC endpoint`));
                     }
-                });
+                }
             });
         }
     });
@@ -80,7 +68,6 @@ const collect = function (o, type, xputs) {
             return r;
         };
     xputs.forEach(function (xput, xput_index) {
-        var _a;
         if (xput.script) {
             const xputres = { i: xput_index, tape: [] };
             let tape_i = 0;
@@ -220,7 +207,7 @@ const collect = function (o, type, xputs) {
                 xputres.tape.push({ cell: cell, i: tape_i++ });
             if (type === "in") {
                 const sender = {
-                    h: (_a = xput.txHashBuf) === null || _a === void 0 ? void 0 : _a.toString("hex"),
+                    h: xput.txHashBuf?.toString("hex"),
                     i: xput.scriptVi,
                 };
                 const address = core_1.Address.fromTxInScript(xput.script).toString();
@@ -243,15 +230,15 @@ const collect = function (o, type, xputs) {
     });
     return xputsres;
 };
-const parse = (o, config) => __awaiter(void 0, void 0, void 0, function* () {
+const parse = async (o, config) => {
     if (o.tx) {
         if (o.tx.h) {
-            return yield fromHash(o, config);
+            return await fromHash(o, config);
         }
         else if (o.tx.r) {
-            return yield fromTx(o);
+            return await fromTx(o);
         }
     }
     throw new Error(`Invalid Tx`);
-});
+};
 exports.parse = parse;

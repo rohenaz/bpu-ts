@@ -39,7 +39,7 @@ const fromHash = function (o: ParseConfig, config?: Config): Promise<BpuTx> {
   });
 };
 
-type Cell = {
+export type Cell = {
   op?: number;
   ops?: string;
   b?: string;
@@ -54,12 +54,12 @@ type Cell = {
   lb?: string;
 };
 
-type Tape = {
+export type Tape = {
   cell: Cell[];
   i: number;
 };
 
-type Out = {
+export type Out = {
   tape: Tape[];
   i: number;
   e: {
@@ -69,7 +69,7 @@ type Out = {
   };
 };
 
-type In = {
+export type In = {
   i: number;
   e: {
     h: string;
