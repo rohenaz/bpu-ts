@@ -243,15 +243,15 @@ const collect = function (o, type, xputs) {
     });
     return xputsres;
 };
-const parse = (o, config) => {
+const parse = (o, config) => __awaiter(void 0, void 0, void 0, function* () {
     if (o.tx) {
         if (o.tx.h) {
-            return fromHash(o, config);
+            return yield fromHash(o, config);
         }
         else if (o.tx.r) {
-            return fromTx(o);
+            return yield fromTx(o);
         }
     }
     throw new Error(`Invalid Tx`);
-};
+});
 exports.parse = parse;
