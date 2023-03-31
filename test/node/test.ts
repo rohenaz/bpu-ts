@@ -6,6 +6,7 @@ import raws from "../raw.json";
 
 const largeraw = raws[0];
 const raw = raws[1];
+const ordRaw = raws[2];
 describe("BPU", function () {
   describe("transform", function () {
     test("larger than 512 bytes => ls", async function () {
@@ -42,6 +43,34 @@ describe("BPU", function () {
       let keys = Object.keys(tape.cell[2]);
       // console.log(keys);
       assert.deepEqual(["ii", "i", "ls", "lb"], keys);
+    });
+  });
+  describe("txid", function () {
+    test("has ord txid", async function () {
+      let result = await parse({
+        tx: { r: ordRaw },
+        split: [
+          { token: { ops: "OP_RETURN" } },
+          {
+            token: { s: "|" },
+          },
+        ],
+        transform: function (o: any, c: any) {
+          if (c.buf && c.buf.byteLength > 512) {
+            o["ls"] = o.s;
+            o["lb"] = o.b;
+            delete o.s;
+            delete o.b;
+          }
+          return o;
+        },
+      });
+      assert.equal(
+        result.tx.h,
+        "10f4465cd18c39fbc7aa4089268e57fc719bf19c8c24f2e09156f4a89a2809d6"
+      );
+
+      //let tape = result.out[0].tape[0];
     });
   });
   describe("split", function () {

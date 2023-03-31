@@ -1,20 +1,27 @@
 {
-  "exclude": ["./coverage", "./node_modules", "./test", "./src/types"],
-  "include": ["src/"],
+  "files": ["jest.config.ts"],
+  "exclude": [
+    "./coverage",
+    "./node_modules",
+    "./test",
+    "./.parcel-cache",
+    "./types"
+  ],
+  "include": ["src/index.ts", "types/common.d.ts", "test/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "module": "ES6",
-    "lib": [],
+    "module": "es6",
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "outDir": "dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ES6",
-    "types": ["jest"]
+    "target": "es2018",
+    "types": ["node", "jest"]
   },
   "ts-node": {
     "moduleTypes": {

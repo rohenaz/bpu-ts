@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { Address, OpCode, Tx } from "@ts-bitcoin/core";
 import RpcClient from "bitcoind-rpc";
 const fromHash = function (o, config) {
@@ -28,22 +19,20 @@ const fromHash = function (o, config) {
     return new Promise(function (resolve, reject) {
         var _a;
         if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
-            rpc.getRawTransaction(o.tx.h, function (err, transaction) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    if (err) {
-                        reject(err);
+            rpc.getRawTransaction(o.tx.h, async function (err, transaction) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    if (o.tx) {
+                        o.tx.r = transaction.result;
+                        const result = await fromTx(o);
+                        resolve(result);
                     }
                     else {
-                        if (o.tx) {
-                            o.tx.r = transaction.result;
-                            const result = yield fromTx(o);
-                            resolve(result);
-                        }
-                        else {
-                            reject(new Error(`Failed to get raw tx from RPC endpoint`));
-                        }
+                        reject(new Error(`Failed to get raw tx from RPC endpoint`));
                     }
-                });
+                }
             });
         }
     });
@@ -56,7 +45,7 @@ const fromTx = function (o) {
             const inputs = gene.txIns ? collect(o, "in", gene.txIns) : [];
             const outputs = gene.txOuts ? collect(o, "out", gene.txOuts) : [];
             resolve({
-                tx: { h: gene.hash().toString() },
+                tx: { h: gene.id() },
                 in: inputs,
                 out: outputs,
                 lock: gene.nLockTime,

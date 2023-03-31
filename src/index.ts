@@ -96,7 +96,7 @@ const fromTx = function (o: ParseConfig): Promise<BpuTx> {
       const inputs = gene.txIns ? collect(o, "in", gene.txIns) : [];
       const outputs = gene.txOuts ? collect(o, "out", gene.txOuts) : [];
       resolve({
-        tx: { h: gene.hash().toString() },
+        tx: { h: gene.id() },
         in: inputs as In[],
         out: outputs as Out[],
         lock: gene.nLockTime,

@@ -4,7 +4,7 @@
   "description": "Bitcoin Processing Unit - Typescript",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
-  "type": "module",
+  "type": "commonjs",
   "author": "wildsatchmo",
   "contributors": [
     "wildsatchmo",
