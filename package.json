@@ -1,6 +1,6 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Bitcoin Processing Unit - Typescript",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",

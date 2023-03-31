@@ -1,158 +1,101 @@
-import { Address, OpCode, Tx } from "@ts-bitcoin/core";
-import RpcClient from "bitcoind-rpc";
-const fromHash = function (o, config) {
-    if (!config) {
-        console.log("split from hash without config");
-        config = {
-            protocol: "http",
-            user: process.env.BITCOIN_USERNAME
-                ? process.env.BITCOIN_USERNAME
-                : "root",
-            pass: process.env.BITCOIN_PASSWORD
-                ? process.env.BITCOIN_PASSWORD
-                : "bitcoin",
-            host: process.env.BITCOIN_IP ? process.env.BITCOIN_IP : "127.0.0.1",
-            port: process.env.BITCOIN_PORT ? process.env.BITCOIN_PORT : "8332",
-        };
-    }
-    const rpc = new RpcClient(config);
-    return new Promise(function (resolve, reject) {
-        var _a;
-        if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
-            rpc.getRawTransaction(o.tx.h, async function (err, transaction) {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    if (o.tx) {
-                        o.tx.r = transaction.result;
-                        const result = await fromTx(o);
-                        resolve(result);
-                    }
-                    else {
-                        reject(new Error(`Failed to get raw tx from RPC endpoint`));
-                    }
-                }
-            });
-        }
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const fromTx = function (o) {
-    const transaction = o.tx.r;
-    return new Promise(function (resolve, reject) {
-        if (transaction) {
-            const gene = Tx.fromHex(transaction);
-            const inputs = gene.txIns ? collect(o, "in", gene.txIns) : [];
-            const outputs = gene.txOuts ? collect(o, "out", gene.txOuts) : [];
-            resolve({
-                tx: { h: gene.id() },
-                in: inputs,
-                out: outputs,
-                lock: gene.nLockTime,
-            });
-        }
-        else {
-            reject(new Error(`No transaction`));
-        }
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-const collect = function (o, type, xputs) {
-    const xputsres = [];
-    if (!o.transform)
-        o.transform = function (r) {
-            return r;
-        };
-    xputs.forEach(function (xput, xput_index) {
-        var _a;
-        if (xput.script) {
-            const xputres = { i: xput_index, tape: [] };
-            let tape_i = 0;
-            let cell_i = 0;
-            let cell = [];
-            xput.script.chunks.forEach(function (c, chunk_index) {
-                if (c.buf) {
-                    const b = c.buf.toString("base64");
-                    const s = c.buf.toString("utf8");
-                    let splitter;
-                    let isSplitter = false;
-                    if (o.split && Array.isArray(o.split)) {
-                        o.split.forEach(function (setting) {
-                            if ((setting.token && setting.token.s && setting.token.s === s) ||
-                                (setting.token && setting.token.b && setting.token.b === b)) {
-                                splitter = setting.include;
-                                isSplitter = true;
-                            }
-                        });
-                    }
-                    if (isSplitter && o.transform) {
-                        if (splitter === "l") {
-                            const item = o.transform({
-                                b: c.buf.toString("base64"),
-                                s: c.buf.toString("utf8"),
-                                ii: chunk_index,
-                                i: cell_i++,
-                            }, c);
-                            cell.push(item);
-                            xputres.tape.push({ cell: cell, i: tape_i++ });
-                            cell = [];
-                            cell_i = 0;
-                        }
-                        else if (splitter === "r") {
-                            xputres.tape.push({ cell: cell, i: tape_i++ });
-                            const item = o.transform({
-                                b: c.buf.toString("base64"),
-                                s: c.buf.toString("utf8"),
-                                ii: chunk_index,
-                                i: cell_i++,
-                            }, c);
-                            cell = [item];
-                            cell_i = 1;
-                        }
-                        else if (splitter === "c") {
-                            xputres.tape.push({ cell: cell, i: tape_i++ });
-                            const item = o.transform({
-                                b: c.buf.toString("base64"),
-                                s: c.buf.toString("utf8"),
-                                ii: chunk_index,
-                                i: 0,
-                            }, c);
-                            xputres.tape.push({ cell: [item], i: tape_i++ });
-                            cell = [];
-                            cell_i = 0;
+define("index", ["require", "exports", "@ts-bitcoin/core", "bitcoind-rpc"], function (require, exports, core_1, bitcoind_rpc_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.parse = void 0;
+    bitcoind_rpc_1 = __importDefault(bitcoind_rpc_1);
+    const fromHash = function (o, config) {
+        if (!config) {
+            console.log("split from hash without config");
+            config = {
+                protocol: "http",
+                user: process.env.BITCOIN_USERNAME
+                    ? process.env.BITCOIN_USERNAME
+                    : "root",
+                pass: process.env.BITCOIN_PASSWORD
+                    ? process.env.BITCOIN_PASSWORD
+                    : "bitcoin",
+                host: process.env.BITCOIN_IP ? process.env.BITCOIN_IP : "127.0.0.1",
+                port: process.env.BITCOIN_PORT ? process.env.BITCOIN_PORT : "8332",
+            };
+        }
+        const rpc = new bitcoind_rpc_1.default(config);
+        return new Promise(function (resolve, reject) {
+            var _a;
+            if ((_a = o.tx) === null || _a === void 0 ? void 0 : _a.h) {
+                rpc.getRawTransaction(o.tx.h, function (err, transaction) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            reject(err);
                         }
                         else {
-                            xputres.tape.push({ cell: cell, i: tape_i++ });
-                            cell = [];
-                            cell_i = 0;
+                            if (o.tx) {
+                                o.tx.r = transaction.result;
+                                const result = yield fromTx(o);
+                                resolve(result);
+                            }
+                            else {
+                                reject(new Error(`Failed to get raw tx from RPC endpoint`));
+                            }
                         }
-                    }
-                    else {
-                        if (o.transform) {
-                            const item = o.transform({
-                                b: c.buf.toString("base64"),
-                                s: c.buf.toString("utf8"),
-                                ii: chunk_index,
-                                i: cell_i++,
-                            }, c);
-                            cell.push(item);
-                        }
-                    }
-                }
-                else {
-                    // Opcode case
-                    if (typeof c.opCodeNum !== "undefined") {
-                        const op = c.opCodeNum;
-                        const ops = OpCode[op].toString();
+                    });
+                });
+            }
+        });
+    };
+    const fromTx = function (o) {
+        const transaction = o.tx.r;
+        return new Promise(function (resolve, reject) {
+            if (transaction) {
+                const gene = core_1.Tx.fromHex(transaction);
+                const inputs = gene.txIns ? collect(o, "in", gene.txIns) : [];
+                const outputs = gene.txOuts ? collect(o, "out", gene.txOuts) : [];
+                resolve({
+                    tx: { h: gene.id() },
+                    in: inputs,
+                    out: outputs,
+                    lock: gene.nLockTime,
+                });
+            }
+            else {
+                reject(new Error(`No transaction`));
+            }
+        });
+    };
+    const collect = function (o, type, xputs) {
+        const xputsres = [];
+        if (!o.transform)
+            o.transform = function (r) {
+                return r;
+            };
+        xputs.forEach(function (xput, xput_index) {
+            var _a;
+            if (xput.script) {
+                const xputres = { i: xput_index, tape: [] };
+                let tape_i = 0;
+                let cell_i = 0;
+                let cell = [];
+                xput.script.chunks.forEach(function (c, chunk_index) {
+                    if (c.buf) {
+                        const b = c.buf.toString("base64");
+                        const s = c.buf.toString("utf8");
                         let splitter;
                         let isSplitter = false;
                         if (o.split && Array.isArray(o.split)) {
                             o.split.forEach(function (setting) {
-                                if ((setting.token &&
-                                    setting.token.op &&
-                                    setting.token.op === op) ||
-                                    (setting.token &&
-                                        setting.token.ops &&
-                                        setting.token.ops === ops)) {
+                                if ((setting.token && setting.token.s && setting.token.s === s) ||
+                                    (setting.token && setting.token.b && setting.token.b === b)) {
                                     splitter = setting.include;
                                     isSplitter = true;
                                 }
@@ -160,7 +103,12 @@ const collect = function (o, type, xputs) {
                         }
                         if (isSplitter && o.transform) {
                             if (splitter === "l") {
-                                const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                const item = o.transform({
+                                    b: c.buf.toString("base64"),
+                                    s: c.buf.toString("utf8"),
+                                    ii: chunk_index,
+                                    i: cell_i++,
+                                }, c);
                                 cell.push(item);
                                 xputres.tape.push({ cell: cell, i: tape_i++ });
                                 cell = [];
@@ -168,13 +116,23 @@ const collect = function (o, type, xputs) {
                             }
                             else if (splitter === "r") {
                                 xputres.tape.push({ cell: cell, i: tape_i++ });
-                                const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                const item = o.transform({
+                                    b: c.buf.toString("base64"),
+                                    s: c.buf.toString("utf8"),
+                                    ii: chunk_index,
+                                    i: cell_i++,
+                                }, c);
                                 cell = [item];
                                 cell_i = 1;
                             }
                             else if (splitter === "c") {
                                 xputres.tape.push({ cell: cell, i: tape_i++ });
-                                const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                const item = o.transform({
+                                    b: c.buf.toString("base64"),
+                                    s: c.buf.toString("utf8"),
+                                    ii: chunk_index,
+                                    i: 0,
+                                }, c);
                                 xputres.tape.push({ cell: [item], i: tape_i++ });
                                 cell = [];
                                 cell_i = 0;
@@ -187,53 +145,114 @@ const collect = function (o, type, xputs) {
                         }
                         else {
                             if (o.transform) {
-                                const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                const item = o.transform({
+                                    b: c.buf.toString("base64"),
+                                    s: c.buf.toString("utf8"),
+                                    ii: chunk_index,
+                                    i: cell_i++,
+                                }, c);
                                 cell.push(item);
                             }
                         }
                     }
                     else {
-                        if (o.transform) {
-                            cell.push(o.transform({ op: c, ii: chunk_index, i: cell_i++ }, c));
+                        // Opcode case
+                        if (typeof c.opCodeNum !== "undefined") {
+                            const op = c.opCodeNum;
+                            const ops = core_1.OpCode[op].toString();
+                            let splitter;
+                            let isSplitter = false;
+                            if (o.split && Array.isArray(o.split)) {
+                                o.split.forEach(function (setting) {
+                                    if ((setting.token &&
+                                        setting.token.op &&
+                                        setting.token.op === op) ||
+                                        (setting.token &&
+                                            setting.token.ops &&
+                                            setting.token.ops === ops)) {
+                                        splitter = setting.include;
+                                        isSplitter = true;
+                                    }
+                                });
+                            }
+                            if (isSplitter && o.transform) {
+                                if (splitter === "l") {
+                                    const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                    cell.push(item);
+                                    xputres.tape.push({ cell: cell, i: tape_i++ });
+                                    cell = [];
+                                    cell_i = 0;
+                                }
+                                else if (splitter === "r") {
+                                    xputres.tape.push({ cell: cell, i: tape_i++ });
+                                    const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                    cell = [item];
+                                    cell_i = 1;
+                                }
+                                else if (splitter === "c") {
+                                    xputres.tape.push({ cell: cell, i: tape_i++ });
+                                    const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                    xputres.tape.push({ cell: [item], i: tape_i++ });
+                                    cell = [];
+                                    cell_i = 0;
+                                }
+                                else {
+                                    xputres.tape.push({ cell: cell, i: tape_i++ });
+                                    cell = [];
+                                    cell_i = 0;
+                                }
+                            }
+                            else {
+                                if (o.transform) {
+                                    const item = o.transform({ op: op, ops: ops, ii: chunk_index, i: cell_i++ }, c);
+                                    cell.push(item);
+                                }
+                            }
+                        }
+                        else {
+                            if (o.transform) {
+                                cell.push(o.transform({ op: c, ii: chunk_index, i: cell_i++ }, c));
+                            }
                         }
                     }
+                });
+                if (cell.length > 0)
+                    xputres.tape.push({ cell: cell, i: tape_i++ });
+                if (type === "in") {
+                    const sender = {
+                        h: (_a = xput.txHashBuf) === null || _a === void 0 ? void 0 : _a.toString("hex"),
+                        i: xput.scriptVi,
+                    };
+                    const address = core_1.Address.fromTxInScript(xput.script).toString();
+                    if (address && address.length > 0) {
+                        sender.a = address;
+                    }
+                    xputres.e = sender;
+                    xputres.seq = xput.nSequence;
                 }
-            });
-            if (cell.length > 0)
-                xputres.tape.push({ cell: cell, i: tape_i++ });
-            if (type === "in") {
-                const sender = {
-                    h: (_a = xput.txHashBuf) === null || _a === void 0 ? void 0 : _a.toString("hex"),
-                    i: xput.scriptVi,
-                };
-                const address = Address.fromTxInScript(xput.script).toString();
-                if (address && address.length > 0) {
-                    sender.a = address;
+                else if (type === "out") {
+                    const receiver = { v: xput.valueBn, i: xput_index };
+                    const address = core_1.Address.fromTxOutScript(xput.script).toString();
+                    if (address && address.length > 0) {
+                        receiver.a = address;
+                    }
+                    xputres.e = receiver;
                 }
-                xputres.e = sender;
-                xputres.seq = xput.nSequence;
+                xputsres.push(xputres);
             }
-            else if (type === "out") {
-                const receiver = { v: xput.valueBn, i: xput_index };
-                const address = Address.fromTxOutScript(xput.script).toString();
-                if (address && address.length > 0) {
-                    receiver.a = address;
-                }
-                xputres.e = receiver;
+        });
+        return xputsres;
+    };
+    const parse = (o, config) => {
+        if (o.tx) {
+            if (o.tx.h) {
+                return fromHash(o, config);
             }
-            xputsres.push(xputres);
+            else if (o.tx.r) {
+                return fromTx(o);
+            }
         }
-    });
-    return xputsres;
-};
-export const parse = (o, config) => {
-    if (o.tx) {
-        if (o.tx.h) {
-            return fromHash(o, config);
-        }
-        else if (o.tx.r) {
-            return fromTx(o);
-        }
-    }
-    throw new Error(`Invalid Tx`);
-};
+        throw new Error(`Invalid Tx`);
+    };
+    exports.parse = parse;
+});
