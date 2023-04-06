@@ -12,10 +12,12 @@ export type Cell = {
   lf?: string;
   lb?: string;
 };
+
 export type Tape = {
   cell: Cell[];
   i: number;
 };
+
 export type Out = {
   tape: Tape[];
   i: number;
@@ -42,12 +44,15 @@ export type BpuTx = {
   };
   lock?: number;
 };
-type ByRawTx = {
+
+export type ByRawTx = {
   r: string;
 };
-type ByTxId = {
+
+export type ByTxId = {
   h: string;
 };
+
 export type SplitConfig = {
   token: {
     op?: number;
@@ -57,6 +62,7 @@ export type SplitConfig = {
   };
   include?: string;
 };
+
 export type ParseConfig = {
   tx: ByRawTx | ByTxId;
   split?: SplitConfig[];
