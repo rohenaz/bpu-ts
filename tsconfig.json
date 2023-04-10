@@ -4,7 +4,6 @@
     "./node_modules",
     "./test",
     "./.parcel-cache",
-    "./src/types",
     "jest.config.ts"
   ],
   "baseUrl": "./src",
@@ -12,9 +11,11 @@
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
+    "declarationDir": "dist",
     "declarationMap": true,
     "esModuleInterop": true,
     "module": "CommonJS",
+    "rootDirs": ["./src", "./src/types"],
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "outDir": "dist",
