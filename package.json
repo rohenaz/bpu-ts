@@ -1,26 +1,20 @@
 {
   "name": "bpu-ts",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Bitcoin Processing Unit - Typescript",
   "types": "dist/index.d.ts",
-  "main": "dist/index.js",
   "type": "commonjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.module.js",
+  "source": "src/index.ts",
+  "files": [
+    "/dist"
+  ],
   "author": "wildsatchmo",
   "contributors": [
     "wildsatchmo",
     "_unwriter"
   ],
-  "targets": {
-    "main": {
-      "isLibrary": true,
-      "context": "node",
-      "source": "src/index.ts",
-      "optimize": false
-    },
-    "types": {
-      "source": "src/index.ts"
-    }
-  },
   "engines": {
     "node": ">= 14"
   },
@@ -30,7 +24,7 @@
     "clean": "yarn cache clean && rimraf dist/",
     "lint": "eslint ./src",
     "prebuild": "npm run clean",
-    "build": "rimraf dist/ && tsc",
+    "build": "rimraf dist/ && microbundle",
     "test": "jest --collectCoverage"
   },
   "dependencies": {
@@ -51,11 +45,11 @@
     "jest": "^29.3.1",
     "jest-config": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
+    "microbundle": "^0.15.1",
     "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
-    "tsc": "^2.0.4",
     "typescript": "^4.9.4"
   }
 }

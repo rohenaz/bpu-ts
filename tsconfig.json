@@ -1,13 +1,5 @@
 {
-  "exclude": [
-    "../coverage",
-    "./node_modules",
-    "./test",
-    "./.parcel-cache",
-    "jest.config.ts"
-  ],
-  "baseUrl": "./src",
-  "include": ["./", "../test/**/*"],
+  "exclude": ["./coverage", "./node_modules", "./test", "jest.config.ts"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
@@ -15,10 +7,9 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "module": "CommonJS",
-    "rootDirs": ["./src", "./src/types"],
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": "./dist",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
