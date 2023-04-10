@@ -1,13 +1,6 @@
 {
-  "exclude": [
-    "./coverage",
-    "./node_modules",
-    "./test",
-    "./.parcel-cache",
-    "./src/types",
-    "jest.config.ts"
-  ],
-  "include": ["src", "test/**/*"],
+  "baseUrl": "./src",
+  "include": ["./", "../test/**/*"],
   "compileOnSave": true,
   "compilerOptions": {
     "declaration": true,
